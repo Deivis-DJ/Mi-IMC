@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora IMC y Grasa Corporal Profesional - Calcula tu Índice de Masa Corporal, Tasa Metabólica Basal (TMB), porcentaje de grasa corporal y obtén recomendaciones personalizadas. Herramienta gratuita con fórmulas científicas.">
+    <meta name="keywords" content="calculadora IMC, índice masa corporal, calcular grasa corporal, TMB, tasa metabólica basal, TDEE, calculadora calorías, peso ideal, composición corporal">
+    <meta name="author" content="Calculadora IMC Pro">
+    <meta property="og:title" content="Calculadora IMC y Grasa Corporal Profesional | Gratis">
+    <meta property="og:description" content="Calcula tu IMC, grasa corporal, metabolismo basal y calorías diarias. Obtén recomendaciones personalizadas según tus resultados.">
+    <meta property="og:type" content="website">
+    <title>Calculadora IMC y Grasa Corporal Profesional | Calcula TMB y Calorías Gratis</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 95%;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* ESPACIOS PARA PUBLICIDAD - OCULTOS POR DEFECTO */
+        .ads-space {
+            display: none; /* Oculto hasta que tengas anuncios reales */
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin: 25px 0;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .ads-space:hover {
+            border-color: #2a5298;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2a5298;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
+        }
+
+        input::placeholder {
+            color: #9ca3af;
+        }
+
+        .gender-group, .activity-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gender-option, .activity-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .gender-option input[type="radio"],
+        .activity-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .gender-label, .activity-label {
+            display: block;
+            padding: 14px 10px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #374151;
+            font-size: 13px;
+        }
+
+        .gender-option input[type="radio"]:checked + .gender-label,
+        .activity-option input[type="radio"]:checked + .activity-label {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            border-color: #2a5298;
+        }
+
+        .gender-label:hover, .activity-label:hover {
+            border-color: #2a5298;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(42, 82, 152, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* BOTONES DE AFILIADO */
+        .affiliate-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .affiliate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .affiliate-button.secondary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .affiliate-button.secondary:hover {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .result {
+            margin-top: 30px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result.hide {
+            animation: slideOut 0.3s ease forwards;
+        }
+
+        .result-card {
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .imc-value {
+            font-size: 56px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .imc-category {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .imc-description {
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 25px;
+        }
+
+        .bajo-peso {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .normal {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            color: white;
+        }
+
+        .sobrepeso {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+        }
+
+        .obesidad {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .additional-info {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 18px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 13px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        /* SECCIÓN DE FÓRMULAS */
+        .formulas-section {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .formulas-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .formula-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .formula-card:hover {
+            border-color: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.15);
+        }
+
+        .formula-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .formula-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-equation {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 10px;
+            border-left: 4px solid #2a5298;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        .formula-equation .var {
+            color: #2a5298;
+            font-weight: 700;
+        }
+
+        .formula-equation .num {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .formula-explanation {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        .formula-result {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0c4a6e;
+            border-left: 4px solid #0284c7;
+        }
+
+        .imc-scale {
+            margin-bottom: 20px;
+            padding: 25px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .scale-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .scale-bar {
+            height: 35px;
+            border-radius: 18px;
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .scale-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .scale-marker {
+            position: relative;
+            height: 45px;
+            margin-bottom: 8px;
+        }
+
+        .marker {
+            position: absolute;
+            width: 4px;
+            height: 45px;
+            background: #1e3c72;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.4);
+        }
+
+        .marker::after {
+            content: '▼';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #1e3c72;
+            font-size: 18px;
+        }
+
+        .reference-table {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 18px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .table-row:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .table-row.bajo-peso { 
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .table-row.normal { 
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        
+        .table-row.sobrepeso { 
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .table-row.obesidad { 
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .body-composition {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .comp-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .comp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .comp-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .comp-card:hover {
+            border-color: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.15);
+        }
+
+        .comp-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .comp-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .recommendations {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            padding: 0;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .rec-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .rec-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .rec-content {
+            padding: 30px;
+        }
+
+        .rec-section {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rec-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .rec-subtitle {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border-left: 4px solid #2a5298;
+            box-shadow: 0 2px 8px rgba(42, 82, 152, 0.1);
+        }
+
+        .rec-subtitle .icon {
+            font-size: 22px;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
+
+        .rec-list {
+            list-style: none;
+            padding: 0;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            overflow: hidden;
+        }
+
+        .rec-list li {
+            padding: 16px 20px 16px 55px;
+            position: relative;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.7;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+
+        .rec-list li:hover {
+            background: linear-gradient(90deg, #f0f9ff 0%, transparent 100%);
+            padding-left: 60px;
+        }
+
+        .rec-list li:last-child {
+            border-bottom: none;
+        }
+
+        .rec-list li::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .rec-list li::after {
+            content: '✓';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+        }
+
+        .warning-box::before {
+            content: '⚠️';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.1;
+        }
+
+        .warning-box p {
+            font-size: 13px;
+            color: #92400e;
+            margin: 0;
+            line-height: 1.7;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .warning-box strong {
+            color: #78350f;
+            font-weight: 700;
+        }
+
+        .health-risks {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 2px solid #f87171;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(248, 113, 113, 0.15);
+        }
+
+        .health-risks::before {
+            content: '🚨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.1;
+        }
+
+        .health-risks p {
+            font-size: 13px;
+            color: #991b1b;
+            margin: 0;
+            line-height: 1.7;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .health-risks strong {
+            color: #7f1d1d;
+            font-weight: 800;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+            border: 2px solid #34d399;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(52, 211, 153, 0.15);
+        }
+
+        .success-box::before {
+            content: '✓';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 100px;
+            opacity: 0.1;
+            font-weight: bold;
+        }
+
+        .success-box p {
+            font-size: 13px;
+            color: #065f46;
+            margin: 0;
+            line-height: 1.7;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .success-box strong {
+            color: #064e3b;
+            font-weight: 700;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .imc-value {
+                font-size: 44px;
+            }
+
+            .activity-group {
+                flex-direction: column;
+            }
+
+            .comp-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rec-header {
+                padding: 20px 20px;
+            }
+
+            .rec-title {
+                font-size: 18px;
+            }
+
+            .rec-content {
+                padding: 20px;
+            }
+
+            .rec-subtitle {
+                font-size: 15px;
+                padding: 10px 15px;
+            }
+
+            .rec-list li {
+                padding: 14px 16px 14px 50px;
+            }
+
+            .formula-equation {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ESPACIO PUBLICITARIO SUPERIOR - Oculto por ahora -->
+        <div class="ads-space">
+            📢 Publicidad
+        </div>
+
+        <h1>Calculadora de IMC</h1>
+        <p class="subtitle">Análisis Completo de Índice de Masa Corporal</p>
+
+        <form id="imcForm">
+            <div class="input-group">
+                <label for="peso">Peso (kg)</label>
+                <input type="number" id="peso" placeholder="Ej: 70" step="0.1" required>
+            </div>
+
+            <div class="input-group">
+                <label for="altura">Altura (cm)</label>
+                <input type="number" id="altura" placeholder="Ej: 170" step="0.1" required>
+            </div>
+
+            <div class="input-group">
+                <label for="edad">Edad (años)</label>
+                <input type="number" id="edad" placeholder="Ej: 25" min="1" max="120" required>
+            </div>
+
+            <div class="input-group">
+                <label>Sexo</label>
+                <div class="gender-group">
+                    <div class="gender-option">
+                        <input type="radio" id="masculino" name="genero" value="masculino" required>
+                        <label for="masculino" class="gender-label">Masculino</label>
+                    </div>
+                    <div class="gender-option">
+                        <input type="radio" id="femenino" name="genero" value="femenino" required>
+                        <label for="femenino" class="gender-label">Femenino</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Nivel de Actividad Física</label>
+                <div class="activity-group">
+                    <div class="activity-option">
+                        <input type="radio" id="sedentario" name="actividad" value="1.2" required>
+                        <label for="sedentario" class="activity-label">Sedentario</label>
+                    </div>
+                    <div class="activity-option">
+                        <input type="radio" id="ligero" name="actividad" value="1.375">
+                        <label for="ligero" class="activity-label">Ligero</label>
+                    </div>
+                    <div class="activity-option">
+                        <input type="radio" id="moderado" name="actividad" value="1.55" checked>
+                        <label for="moderado" class="activity-label">Moderado</label>
+                    </div>
+                    <div class="activity-option">
+                        <input type="radio" id="intenso" name="actividad" value="1.725">
+                        <label for="intenso" class="activity-label">Intenso</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Calcular IMC Completo</button>
+        </form>
+
+        <!-- ESPACIO PUBLICITARIO DESPUÉS DEL BOTÓN - Oculto por ahora -->
+        <div class="ads-space">
+            📢 Publicidad
+        </div>
+
+        <div id="resultado" class="result">
+            <div class="result-card" id="resultCard">
+                <div class="imc-value" id="imcValor"></div>
+                <div class="imc-category" id="imcCategoria"></div>
+                <div class="imc-description" id="imcDescripcion"></div>
+
+                <div class="additional-info">
+                    <div class="info-item">
+                        <span class="info-label">Peso ideal:</span>
+                        <span class="info-value" id="pesoIdeal"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Para alcanzar:</span>
+                        <span class="info-value" id="diferenciaPeso"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Metabolismo basal:</span>
+                        <span class="info-value" id="metabolismo"></span>
+                    </div>
+                    <!-- BOTÓN DE AFILIADO: BÁSCULAS -->
+                    <a href="#" class="affiliate-button secondary" onclick="alert('Aquí va tu link de afiliado a básculas'); return false;">
+                        ⚖️ Ver Básculas Inteligentes
+                    </a>
+                    <div class="info-item">
+                        <span class="info-label">Calorías diarias:</span>
+                        <span class="info-value" id="calorias"></span>
+                    </div>
+                </div>
+
+                <div id="alertBox"></div>
+            </div>
+
+            <div class="formulas-section">
+                <div class="formulas-title">
+                    🧮 Fórmulas Utilizadas
+                </div>
+                <div id="formulasContent"></div>
+            </div>
+
+            <div class="imc-scale">
+                <div class="scale-title">Tu posición en la escala IMC</div>
+                <div class="scale-marker">
+                    <div class="marker" id="marker"></div>
+                </div>
+                <div class="scale-bar">
+                    <div class="scale-segment" style="width: 18.5%; background: #3b82f6;">Bajo</div>
+                    <div class="scale-segment" style="width: 31.5%; background: #10b981;">Normal</div>
+                    <div class="scale-segment" style="width: 25%; background: #f59e0b;">Sobrepeso</div>
+                    <div class="scale-segment" style="width: 25%; background: #ef4444;">Obesidad</div>
+                </div>
+                <div class="scale-labels">
+                    <span>0</span>
+                    <span>18.5</span>
+                    <span>25</span>
+                    <span>30</span>
+                    <span>40+</span>
+                </div>
+            </div>
+
+            <div class="body-composition">
+                <div class="comp-title">Composición Corporal Estimada</div>
+                <div class="comp-grid">
+                    <div class="comp-card">
+                        <div class="comp-label">Grasa Corporal</div>
+                        <div class="comp-value" id="grasaCorporal">--</div>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-label">Masa Magra</div>
+                        <div class="comp-value" id="masaMagra">--</div>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-label">Agua Corporal</div>
+                        <div class="comp-value" id="aguaCorporal">--</div>
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-label">Proteína/Día</div>
+                        <div class="comp-value" id="proteinaDiaria">--</div>
+                    </div>
+                </div>
+                <!-- BOTÓN DE AFILIADO: SUPLEMENTOS -->
+                <a href="#" class="affiliate-button" onclick="alert('Aquí va tu link de afiliado a suplementos'); return false;">
+                    🛒 Ver Suplementos Recomendados
+                </a>
+            </div>
+
+            <div class="recommendations" id="recommendations">
+                <!-- Recomendaciones dinámicas -->
+            </div>
+        </div>
+
+        <div class="reference-table">
+            <div class="table-title">
+                📊 Tabla de Referencia IMC
+            </div>
+            <div class="table-row bajo-peso">
+                <span><strong>Bajo Peso</strong></span>
+                <span>Menos de 18.5</span>
+            </div>
+            <div class="table-row normal">
+                <span><strong>Peso Normal</strong></span>
+                <span>18.5 - 24.9 ✓</span>
+            </div>
+            <div class="table-row sobrepeso">
+                <span><strong>Sobrepeso</strong></span>
+                <span>25.0 - 29.9</span>
+            </div>
+            <div class="table-row obesidad">
+                <span><strong>Obesidad</strong></span>
+                <span>30.0 o más</span>
+            </div>
+        </div>
+
+        <!-- ESPACIO PUBLICITARIO FINAL - Oculto por ahora -->
+        <div class="ads-space">
+            📢 Publicidad
+        </div>
+
+        <div class="footer">
+            <p>⚕️ Los resultados son orientativos. Consulta a un profesional de la salud para un diagnóstico preciso.</p>
+        </div>
+    </div>
+
+    <script>
+        const recommendations = {
+            bajoPeso: {
+                title: '📈 Plan para Aumentar Peso Saludablemente',
+                nutrition: [
+                    'Incrementa tu ingesta calórica en 300-500 calorías diarias de forma gradual',
+                    'Consume 5-6 comidas pequeñas al día en lugar de 3 grandes comidas',
+                    'Prioriza alimentos densos en nutrientes: frutos secos, aguacate, aceite de oliva',
+                    'Aumenta proteínas de calidad: carnes magras, pescado, huevos, legumbres (1.6-2.2g/kg)',
+                    'Incluye carbohidratos complejos: avena, arroz integral, pasta integral, quinoa',
+                    'Batidos calóricos con frutas, yogurt, mantequilla de maní y proteína en polvo'
+                ],
+                exercise: [
+                    'Entrenamiento de fuerza 3-4 veces por semana para ganar masa muscular',
+                    'Ejercicios compuestos: sentadillas, press de banca, peso muerto, dominadas',
+                    'Reduce el cardio excesivo (máximo 20-30 minutos, 2-3 veces por semana)',
+                    'Descanso adecuado entre entrenamientos: 7-9 horas de sueño por noche',
+                    'Progresión gradual en los pesos y resistencia cada semana'
+                ],
+                lifestyle: [
+                    'Evita saltarte comidas, especialmente el desayuno',
+                    'Reduce el estrés: puede disminuir significativamente el apetito',
+                    'Consulta a un nutricionista para un plan personalizado y seguimiento',
+                    'Monitorea tu progreso semanalmente y ajusta según resultados'
+                ],
+                risks: 'Riesgos: Sistema inmune debilitado, pérdida de masa muscular, osteoporosis, anemia, problemas de fertilidad.'
+            },
+            normal: {
+                title: '✅ Mantén tu Peso Saludable',
+                nutrition: [
+                    'Mantén una dieta equilibrada con todos los grupos alimenticios',
+                    'Consume al menos 5 porciones de frutas y verduras variadas al día',
+                    'Incluye proteínas magras en cada comida principal (pollo, pescado, legumbres)',
+                    'Carbohidratos complejos: granos enteros, quinoa, batata, arroz integral',
+                    'Grasas saludables: aceite de oliva extra virgen, aguacate, frutos secos',
+                    'Mantén hidratación óptima: 2-3 litros de agua al día'
+                ],
+                exercise: [
+                    'Mínimo 150 minutos de ejercicio aeróbico moderado por semana',
+                    'Combina entrenamiento cardiovascular (correr, nadar, ciclismo) con fuerza',
+                    'Entrenamiento de fuerza 2-3 veces por semana para mantener masa muscular',
+                    'Actividades diarias: caminar 10,000 pasos, subir escaleras, estiramiento',
+                    'Varía tu rutina para mantener la motivación y evitar estancamiento'
+                ],
+                lifestyle: [
+                    'Duerme 7-9 horas diarias para recuperación óptima y salud hormonal',
+                    'Maneja el estrés con técnicas de relajación, meditación o yoga',
+                    'Evita dietas extremas o restricciones alimentarias innecesarias',
+                    'Realiza chequeos médicos anuales preventivos',
+                    'Mantén un equilibrio saludable entre trabajo y vida personal'
+                ],
+                risks: null
+            },
+            sobrepeso: {
+                title: '⚠️ Plan para Alcanzar un Peso Saludable',
+                nutrition: [
+                    'Reduce ingesta calórica en 300-500 calorías diarias (nunca menos de 1200 kcal)',
+                    'Aumenta consumo de vegetales y proteínas, reduce carbohidratos refinados',
+                    'Elimina azúcares añadidos, bebidas azucaradas, alcohol y comida procesada',
+                    'Controla porciones: usa platos más pequeños y come con atención plena',
+                    'Proteína alta (1.6-2g/kg) para preservar masa muscular durante pérdida de peso',
+                    'Come despacio, mastica bien y evita distracciones durante las comidas',
+                    'Planifica comidas semanalmente y prepara lunch saludable'
+                ],
+                exercise: [
+                    'Cardio 4-5 veces por semana (30-45 minutos): caminata rápida, correr, nadar',
+                    'Entrenamiento de fuerza 3 veces por semana para mantener y ganar músculo',
+                    'HIIT (Entrenamiento de intervalos) 2 veces por semana para quemar calorías',
+                    'Incrementa actividad diaria: objetivo de 10,000-12,000 pasos diarios',
+                    'Ejercicios de bajo impacto si hay problemas articulares (natación, elíptica)'
+                ],
+                lifestyle: [
+                    'Establece metas realistas y sostenibles: 0.5-1 kg por semana',
+                    'Lleva un diario de alimentación y ejercicio para crear conciencia',
+                    'Evita comer por aburrimiento, estrés emocional o ansiedad',
+                    'Duerme 7-8 horas: la falta de sueño aumenta hormonas del hambre',
+                    'Busca apoyo profesional: nutricionista, entrenador o grupos de apoyo',
+                    'Identifica y evita situaciones que desencadenan comer en exceso'
+                ],
+                risks: 'Riesgos aumentados: Diabetes tipo 2, hipertensión arterial, colesterol alto, apnea del sueño, problemas cardiovasculares.'
+            },
+            obesidad: {
+                title: '🚨 Plan de Acción Urgente - Requiere Intervención',
+                nutrition: [
+                    'URGENTE: Consulta con nutricionista certificado para plan personalizado médico',
+                    'Déficit calórico controlado y supervisado: 500-750 calorías bajo tu gasto',
+                    'Dieta muy alta en proteínas (2-2.5g/kg) para preservar músculo',
+                    'Elimina completamente: azúcares, refrescos, comida rápida, alimentos ultra-procesados',
+                    'Enfócate en alimentos reales y naturales: verduras, proteínas magras, granos integrales',
+                    'Come 4-5 comidas pequeñas controladas, nunca saltarse comidas principales',
+                    'Aumenta fibra significativamente: mínimo 25-30g diarios para saciedad prolongada'
+                ],
+                exercise: [
+                    'Inicia con caminatas diarias de 20-30 minutos e incrementa gradualmente',
+                    'Ejercicios de bajo impacto: natación, bicicleta estática, elíptica, aqua fitness',
+                    'Incrementa gradualmente intensidad y duración según tolerancia',
+                    'Entrenamiento de fuerza ligero 2-3 veces/semana con supervisión',
+                    'OBLIGATORIO: Consulta médica antes de iniciar cualquier programa intenso',
+                    'Considera fisioterapeuta especializado para evitar lesiones articulares'
+                ],
+                lifestyle: [
+                    '🏥 PRIORITARIO: Evaluación médica completa para descartar condiciones asociadas',
+                    'Screening de comorbilidades: diabetes, hipertensión, apnea del sueño, problemas cardíacos',
+                    'Apoyo psicológico profesional para abordar relación emocional con la comida',
+                    'Establece red de apoyo sólida: familia, amigos, grupos de apoyo, comunidad',
+                    'Monitoreo médico regular: peso, presión arterial, glucosa, perfil lipídico',
+                    'Evita dietas de moda, soluciones rápidas o productos milagro',
+                    'Considera intervención médica avanzada si IMC > 40 (cirugía bariátrica, medicamentos)'
+                ],
+                risks: 'RIESGOS GRAVES Y URGENTES: Diabetes tipo 2, enfermedades cardíacas, hipertensión severa, accidente cerebrovascular, apnea del sueño grave, varios tipos de cáncer (colon, mama, hígado, riñón), osteoartritis debilitante, problemas severos de fertilidad, depresión clínica, daño hepático. Reducción significativa de expectativa de vida.'
+            }
+        };
+
+        // Evento submit del formulario
+        document.getElementById('imcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const peso = parseFloat(document.getElementById('peso').value);
+            const alturaCm = parseFloat(document.getElementById('altura').value);
+            const edad = parseInt(document.getElementById('edad').value);
+            const generoElement = document.querySelector('input[name="genero"]:checked');
+            const actividadElement = document.querySelector('input[name="actividad"]:checked');
+
+            if (!generoElement || !actividadElement) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+
+            const genero = generoElement.value;
+            const factorActividad = parseFloat(actividadElement.value);
+            const alturaM = alturaCm / 100;
+
+            if (peso <= 0 || alturaM <= 0 || edad <= 0) {
+                alert('Por favor, ingresa valores válidos');
+                return;
+            }
+
+            // Cálculo IMC
+            const imc = (peso / (alturaM * alturaM)).toFixed(1);
+
+            let categoria = '';
+            let descripcion = '';
+            let clase = '';
+            let recType = '';
+
+            if (imc < 18.5) {
+                categoria = 'Bajo Peso';
+                descripcion = 'Tu IMC está por debajo del rango saludable. Es importante aumentar peso de forma saludable.';
+                clase = 'bajo-peso';
+                recType = 'bajoPeso';
+            } else if (imc >= 18.5 && imc < 25) {
+                categoria = 'Peso Normal';
+                descripcion = '¡Excelente! Tu peso está en el rango saludable. Mantén tus buenos hábitos.';
+                clase = 'normal';
+                recType = 'normal';
+            } else if (imc >= 25 && imc < 30) {
+                categoria = 'Sobrepeso';
+                descripcion = 'Tu IMC indica sobrepeso. Con cambios en tu estilo de vida puedes alcanzar un peso saludable.';
+                clase = 'sobrepeso';
+                recType = 'sobrepeso';
+            } else {
+                categoria = 'Obesidad';
+                descripcion = 'Tu IMC indica obesidad. Es importante tomar acción inmediata con apoyo profesional.';
+                clase = 'obesidad';
+                recType = 'obesidad';
+            }
+
+            // Calcular peso ideal
+            const pesoIdealMin = (18.5 * alturaM * alturaM).toFixed(1);
+            const pesoIdealMax = (24.9 * alturaM * alturaM).toFixed(1);
+
+            // Diferencia de peso
+            let diferencia = '';
+            if (imc < 18.5) {
+                const diferenciaPeso = (pesoIdealMin - peso).toFixed(1);
+                diferencia = `+${diferenciaPeso} kg`;
+            } else if (imc >= 25) {
+                const diferenciaPeso = (peso - pesoIdealMax).toFixed(1);
+                diferencia = `-${diferenciaPeso} kg`;
+            } else {
+                diferencia = 'Ya estás en rango ✓';
+            }
+
+            // Calcular Metabolismo Basal (TMB)
+            let tmb;
+            let tmbFormula = '';
+            if (genero === 'masculino') {
+                tmb = 88.362 + (13.397 * peso) + (4.799 * alturaCm) - (5.677 * edad);
+                tmbFormula = `TMB = 88.362 + (13.397 × ${peso}) + (4.799 × ${alturaCm}) - (5.677 × ${edad})`;
+            } else {
+                tmb = 447.593 + (9.247 * peso) + (3.098 * alturaCm) - (4.330 * edad);
+                tmbFormula = `TMB = 447.593 + (9.247 × ${peso}) + (3.098 × ${alturaCm}) - (4.330 × ${edad})`;
+            }
+            tmb = Math.round(tmb);
+
+            // Calorías diarias según actividad
+            const calorias = Math.round(tmb * factorActividad);
+            const caloriasFormula = `Calorías = ${tmb} × ${factorActividad}`;
+
+            // Estimación de composición corporal
+            let porcentajeGrasa;
+            let grasaFormula = '';
+            if (genero === 'masculino') {
+                porcentajeGrasa = (1.20 * imc) + (0.23 * edad) - 16.2;
+                grasaFormula = `Grasa = (1.20 × ${imc}) + (0.23 × ${edad}) - 16.2`;
+            } else {
+                porcentajeGrasa = (1.20 * imc) + (0.23 * edad) - 5.4;
+                grasaFormula = `Grasa = (1.20 × ${imc}) + (0.23 × ${edad}) - 5.4`;
+            }
+            porcentajeGrasa = Math.max(3, Math.min(50, porcentajeGrasa));
+
+            const masaGrasa = (peso * porcentajeGrasa / 100).toFixed(1);
+            const masaMagra = (peso - masaGrasa).toFixed(1);
+            const aguaCorporal = (masaMagra * 0.73).toFixed(1);
+            const proteinaDiaria = (peso * 1.6).toFixed(0);
+
+            // Actualizar resultados
+            const resultado = document.getElementById('resultado');
+            const resultCard = document.getElementById('resultCard');
+            resultCard.className = 'result-card ' + clase;
+            
+            document.getElementById('imcValor').textContent = imc;
+            document.getElementById('imcCategoria').textContent = categoria;
+            document.getElementById('imcDescripcion').textContent = descripcion;
+            document.getElementById('pesoIdeal').textContent = `${pesoIdealMin} - ${pesoIdealMax} kg`;
+            document.getElementById('diferenciaPeso').textContent = diferencia;
+            document.getElementById('metabolismo').textContent = `${tmb} kcal/día`;
+            document.getElementById('calorias').textContent = `${calorias} kcal/día`;
+
+            // Composición corporal
+            document.getElementById('grasaCorporal').textContent = porcentajeGrasa.toFixed(1) + '%';
+            document.getElementById('masaMagra').textContent = masaMagra + ' kg';
+            document.getElementById('aguaCorporal').textContent = aguaCorporal + ' L';
+            document.getElementById('proteinaDiaria').textContent = proteinaDiaria + ' g';
+
+            // Generar sección de fórmulas
+            const formulasHTML = `
+                <div class="formula-card">
+                    <div class="formula-name">📏 Cálculo del IMC</div>
+                    <div class="formula-equation">
+                        <span class="var">IMC</span> = <span class="var">Peso (kg)</span> / <span class="var">Altura (m)</span>²
+                    </div>
+                    <div class="formula-equation">
+                        <span class="var">IMC</span> = <span class="num">${peso}</span> / (<span class="num">${alturaM}</span>)²
+                    </div>
+                    <div class="formula-result">
+                        ✓ Resultado: IMC = ${imc}
+                    </div>
+                    <div class="formula-explanation">
+                        El IMC se calcula dividiendo el peso en kilogramos entre la altura en metros al cuadrado. Es un indicador ampliamente utilizado para evaluar si el peso está en un rango saludable.
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <div class="formula-name">🔥 Tasa Metabólica Basal (TMB) - Fórmula Harris-Benedict</div>
+                    <div class="formula-equation">
+                        ${tmbFormula}
+                    </div>
+                    <div class="formula-equation">
+                        <span class="var">TMB</span> = <span class="num">${tmb}</span> kcal/día
+                    </div>
+                    <div class="formula-result">
+                        ✓ Tu metabolismo basal: ${tmb} kcal/día
+                    </div>
+                    <div class="formula-explanation">
+                        La TMB representa las calorías que tu cuerpo quema en reposo para mantener funciones vitales como respiración, circulación y temperatura corporal. Esta fórmula fue desarrollada por Harris y Benedict.
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <div class="formula-name">⚡ Gasto Calórico Diario Total (TDEE)</div>
+                    <div class="formula-equation">
+                        ${caloriasFormula}
+                    </div>
+                    <div class="formula-equation">
+                        <span class="var">TDEE</span> = <span class="num">${calorias}</span> kcal/día
+                    </div>
+                    <div class="formula-result">
+                        ✓ Calorías diarias necesarias: ${calorias} kcal/día
+                    </div>
+                    <div class="formula-explanation">
+                        El TDEE multiplica tu TMB por un factor de actividad (sedentario: 1.2, ligero: 1.375, moderado: 1.55, intenso: 1.725) para estimar las calorías totales que quemas al día incluyendo ejercicio y actividades.
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <div class="formula-name">💧 Porcentaje de Grasa Corporal - Fórmula de Deurenberg</div>
+                    <div class="formula-equation">
+                        ${grasaFormula}
+                    </div>
+                    <div class="formula-equation">
+                        <span class="var">Grasa Corporal</span> = <span class="num">${porcentajeGrasa.toFixed(1)}</span>%
+                    </div>
+                    <div class="formula-result">
+                        ✓ Grasa estimada: ${porcentajeGrasa.toFixed(1)}% (${masaGrasa} kg)
+                    </div>
+                    <div class="formula-explanation">
+                        Esta fórmula estima el porcentaje de grasa corporal basándose en el IMC, edad y sexo. La masa magra se calcula restando la grasa del peso total, y el agua corporal es aproximadamente el 73% de la masa magra.
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <div class="formula-name">🥩 Proteína Diaria Recomendada</div>
+                    <div class="formula-equation">
+                        <span class="var">Proteína</span> = <span class="var">Peso (kg)</span> × <span class="num">1.6</span> g/kg
+                    </div>
+                    <div class="formula-equation">
+                        <span class="var">Proteína</span> = <span class="num">${peso}</span> × <span class="num">1.6</span> = <span class="num">${proteinaDiaria}</span> g/día
+                    </div>
+                    <div class="formula-result">
+                        ✓ Proteína diaria: ${proteinaDiaria} gramos
+                    </div>
+                    <div class="formula-explanation">
+                        La recomendación de 1.6 g/kg es óptima para personas activas que buscan mantener o ganar masa muscular. Para personas sedentarias, 0.8-1.2 g/kg es suficiente.
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('formulasContent').innerHTML = formulasHTML;
+
+            // Alert box
+            const alertBox = document.getElementById('alertBox');
+            if (recType === 'normal') {
+                alertBox.innerHTML = '<div class="success-box"><p><strong>¡Felicitaciones!</strong> Estás en un peso saludable. Continúa con tus buenos hábitos de alimentación y ejercicio.</p></div>';
+            } else if (recType === 'bajoPeso') {
+                alertBox.innerHTML = '<div class="warning-box"><p><strong>Atención:</strong> Un IMC bajo puede afectar tu salud. Considera consultar a un profesional de la salud.</p></div>';
+            } else if (recType === 'sobrepeso') {
+                alertBox.innerHTML = '<div class="warning-box"><p><strong>Importante:</strong> El sobrepeso puede aumentar riesgos de salud. Pequeños cambios pueden hacer gran diferencia.</p></div>';
+            } else {
+                alertBox.innerHTML = '<div class="health-risks"><p><strong>⚠️ ALERTA DE SALUD:</strong> La obesidad requiere atención médica inmediata. Consulta a un profesional para crear un plan de acción.</p></div>';
+            }
+
+            // Posicionar marcador en la escala
+            const marker = document.getElementById('marker');
+            let markerPosition = 0;
+            
+            if (imc < 18.5) {
+                markerPosition = (imc / 18.5) * 18.5;
+            } else if (imc < 25) {
+                markerPosition = 18.5 + ((imc - 18.5) / (25 - 18.5)) * 31.5;
+            } else if (imc < 30) {
+                markerPosition = 50 + ((imc - 25) / (30 - 25)) * 25;
+            } else {
+                markerPosition = 75 + Math.min(((imc - 30) / 10) * 25, 25);
+            }
+            
+            marker.style.left = `${markerPosition}%`;
+
+            // Generar recomendaciones
+            const rec = recommendations[recType];
+            let recHTML = `
+                <div class="rec-header">
+                    <div class="rec-title">${rec.title}</div>
+                </div>
+                
+                <div class="rec-content">
+                    <div class="rec-section">
+                        <div class="rec-subtitle">
+                            <span class="icon">🍎</span>
+                            <span>Nutrición</span>
+                        </div>
+                        <ul class="rec-list">
+                            ${rec.nutrition.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="rec-section">
+                        <div class="rec-subtitle">
+                            <span class="icon">💪</span>
+                            <span>Ejercicio</span>
+                        </div>
+                        <ul class="rec-list">
+                            ${rec.exercise.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="rec-section">
+                        <div class="rec-subtitle">
+                            <span class="icon">🏥</span>
+                            <span>Estilo de Vida</span>
+                        </div>
+                        <ul class="rec-list">
+                            ${rec.lifestyle.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+            `;
+
+            if (rec.risks) {
+                recHTML += `<div class="health-risks"><p><strong>Riesgos asociados:</strong> ${rec.risks}</p></div>`;
+            }
+
+            recHTML += '</div>';
+
+            document.getElementById('recommendations').innerHTML = recHTML;
+
+            resultado.classList.remove('hide');
+            resultado.classList.add('show');
+            resultado.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Detectar cambios en los inputs para ocultar resultados
+        const allInputs = document.querySelectorAll('#peso, #altura, #edad');
+        const radioInputs = document.querySelectorAll('input[name="genero"], input[name="actividad"]');
+
+        allInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const resultado = document.getElementById('resultado');
+                if (resultado.classList.contains('show')) {
+                    resultado.classList.add('hide');
+                    setTimeout(() => {
+                        resultado.classList.remove('show', 'hide');
+                    }, 300);
+                }
+            });
+        });
+
+        radioInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const resultado = document.getElementById('resultado');
+                if (resultado.classList.contains('show')) {
+                    resultado.classList.add('hide');
+                    setTimeout(() => {
+                        resultado.classList.remove('show', 'hide');
+                    }, 300);
+                }
+            });
+        });
+
+        // Permitir solo números y punto decimal
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === '-' || e.key === '+' || e.key === 'e') {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
